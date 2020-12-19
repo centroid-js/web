@@ -102,3 +102,12 @@ dist
 
 # TernJS port file
 .tern-port
+
+# project
+core
+platform-server
+
+# editors
+.theia
+.idea
+.vscode
