@@ -1,0 +1,68 @@
+// MOST Web Framework Codename ZeroGravity, copyright 2017-2020 THEMOST LP all rights reserved
+import {HttpApplication} from '@themost/w/platform-server';
+import { ApplicationService, IApplication } from '@themost/common';
+
+class SampleService extends ApplicationService {
+    constructor(app: IApplication) {
+        super(app);
+    }
+
+    getMessage() {
+        return 'Hello World';
+    }
+}
+
+class SampleStrategy extends SampleService {
+    constructor(app: IApplication) {
+        super(app);
+    }
+
+    getMessage() {
+        return 'Hello World!';
+    }
+}
+
+describe('HttpApplication', () => {
+
+    it('should create instance', () => {
+        const app = new HttpApplication();
+        expect(app).toBeTruthy()
+    });
+
+    it('should use HttpApplication.hasService()', () => {
+        const app = new HttpApplication();
+        expect(app.hasService(SampleService)).toBeFalsy();
+        expect(() => {
+            app.hasService(null);
+        }).toThrowError();
+    });
+
+    it('should use HttpApplication.useService()', () => {
+        const app = new HttpApplication();
+        app.useService(SampleService);
+        expect(app.hasService(SampleService)).toBeTruthy();
+    });
+
+    it('should use HttpApplication.getService()', () => {
+        const app = new HttpApplication();
+        app.useService(SampleService);
+        const service = app.getService(SampleService);
+        expect(service).toBeTruthy();
+        expect(service.getMessage()).toBeTruthy('Hello World');
+    });
+
+    it('should use HttpApplication.useStrategy()', () => {
+        const app = new HttpApplication();
+        app.useStrategy(SampleService, SampleService);
+        expect(app.hasService(SampleService)).toBeTruthy();
+        const service = <SampleStrategy>app.getService(SampleService);
+        expect(service.getMessage()).toBeTruthy('Hello World!');
+    });
+
+    it('should use HttpApplication.getConfiguration()', () => {
+        const app = new HttpApplication();
+        expect(app.configuration).toBeTruthy();
+        expect(app.getConfiguration()).toBeTruthy();
+    });
+
+});

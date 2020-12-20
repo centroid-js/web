@@ -2,16 +2,16 @@
   "name": "@themost/w",
   "version": "3.0.0",
   "description": "MOST Web Framework MVC Module",
-  "type": "core/index.d.ts",
-  "module": "core/index.esm.js",
-  "main": "core/index.umd.js",
+  "type": "platform-server/index.d.ts",
+  "module": "platform-server/index.esm.js",
+  "main": "platform-server/index.umd.js",
   "scripts": {
     "test": "jasmine",
     "build": "rimraf dist && rollup -c ./rollup.config.js",
     "lint": "tslint"
   },
   "peerDependencies": {
-    "@themost/common": "^2.5.2",
+    "@themost/common": "^2.5.5",
     "@themost/xml": "^2.5.1"
   },
   "engines": {
@@ -28,14 +28,16 @@
   },
   "homepage": "https://github.com/themost-framework/d#readme",
   "dependencies": {
+    "i18n": "^0.13.2",
     "lodash": "^4.17.20",
     "pluralize": "^8.0.0"
   },
   "devDependencies": {
-    "@themost/common": "^2.5.4",
+    "@themost/common": "^2.5.5",
     "@themost/xml": "^2.5.1",
     "@types/core-js": "^2.5.0",
     "@types/express": "^4.17.9",
+    "@types/i18n": "^0.12.0",
     "@types/jasmine": "^3.6.0",
     "@types/lodash": "^4.14.164",
     "@types/node": "^10.12.0",

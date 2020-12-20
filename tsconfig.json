@@ -15,8 +15,8 @@
       "dom"
     ],
     "paths": {
-      "@themost/d/core": [ "src/core/index" ],
-      "@themost/d/platform-server": [ "src/core/platform-server" ]
+      "@themost/w/core": [ "src/core/index" ],
+      "@themost/w/platform-server": [ "src/core/platform-server" ]
     }
   },
   "include": [
