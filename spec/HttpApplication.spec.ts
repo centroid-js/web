@@ -1,9 +1,9 @@
 // MOST Web Framework Codename ZeroGravity, copyright 2017-2020 THEMOST LP all rights reserved
 import {HttpApplication} from '@themost/w/platform-server';
-import { ApplicationService, IApplication } from '@themost/common';
+import { ApplicationService, IApplication, ApplicationBase } from '@themost/common';
 
 class SampleService extends ApplicationService {
-    constructor(app: IApplication) {
+    constructor(app: ApplicationBase) {
         super(app);
     }
 
@@ -13,7 +13,7 @@ class SampleService extends ApplicationService {
 }
 
 class SampleStrategy extends SampleService {
-    constructor(app: IApplication) {
+    constructor(app: ApplicationBase) {
         super(app);
     }
 
