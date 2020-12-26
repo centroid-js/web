@@ -2,3 +2,7 @@
 export * from "./HttpApplication";
 export * from "./HttpContext";
 export * from "./I18nLocalizationService";
+export * from "./HttpResult";
+export * from "./HttpNextResult";
+export * from "./HttpRedirectResult";
+export * from "./HttpContentResult";

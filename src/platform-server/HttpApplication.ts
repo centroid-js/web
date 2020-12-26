@@ -2,10 +2,14 @@
 // MOST Web Framework Codename ZeroGravity, copyright 2017-2020 THEMOST LP all rights reserved
 import { ConfigurationBase, SequentialEventEmitter, Args } from "@themost/common";
 import { HttpApplicationBase, ApplicationServiceConstructor } from "@themost/w/core";
+import { Application, PathParams, Request, Response } from "express-serve-static-core";
+import { NextFunction } from "connect";
+import { HttpContext } from "./HttpContext";
 
 export class HttpApplication extends SequentialEventEmitter implements HttpApplicationBase {
     private _configuration: ConfigurationBase;
     private services: Map<string, any> = new Map();
+    public container: any;
 
     constructor() {
         super();
@@ -67,6 +71,32 @@ export class HttpApplication extends SequentialEventEmitter implements HttpAppli
      */
     getConfiguration(): ConfigurationBase {
         return this._configuration;
+    }
+
+    createContext(req: Request, res: Response) {
+        const context = new HttpContext();
+        context.application = this;
+        context.request = req;
+        context.response = res;
+        return context;
+    }
+
+    middleware(app: Application) {
+        // set container
+        this.container = app;
+        // return request handler
+        return (req: Request, res: Response, next: NextFunction) => {
+            // create context
+            const context = this.createContext(req, res);
+            // set context
+            Object.defineProperty(req, 'context', {
+                enumerable: false,
+                configurable: false,
+                writable: false,
+                value: context
+            });
+            return next();
+        };
     }
     
 }
