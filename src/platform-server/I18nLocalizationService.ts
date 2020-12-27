@@ -6,17 +6,17 @@ import * as path from 'path';
 import {assign, merge} from 'lodash';
 
 export class I18nLocalizationService extends LocalizationService {
-    public locales: string[] = [ "en" ];
-    public defaultLocale: string = "en";
+    public locales: string[] = [ 'en' ];
+    public defaultLocale: string = 'en';
     private _i18n: I18n;
 
     constructor(app: ApplicationBase) {
         super(app);
         // get app configuration options
-        const options = <ConfigurationOptions>app.getConfiguration().getSourceAt('settings/i18n');
+        const options = app.getConfiguration().getSourceAt('settings/i18n') as ConfigurationOptions;
         const finalOptions = Object.assign({
-            locales: [ "en" ],
-            defaultLocale: "en",
+            locales: [ 'en' ],
+            defaultLocale: 'en',
             directory: path.resolve(process.cwd(),'i18n'),
             autoReload: false,
             updateFiles: false,
@@ -35,7 +35,7 @@ export class I18nLocalizationService extends LocalizationService {
     public get(locale: string, key: string, replace?: any): string {
         return this._i18n.__({
                 phrase: key,
-                locale: locale
+                locale
             }, replace);
         };
     public set(locale: string, data: any, shouldMerge?: boolean): this {

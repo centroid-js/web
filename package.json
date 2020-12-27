@@ -2,7 +2,7 @@
   "name": "@themost/w",
   "version": "3.0.0",
   "description": "MOST Web Framework MVC Module",
-  "type": "platform-server/index.d.ts",
+  "types": "platform-server/index.d.ts",
   "module": "platform-server/index.esm.js",
   "main": "platform-server/index.umd.js",
   "scripts": {

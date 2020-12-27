@@ -1,13 +1,12 @@
-
 // MOST Web Framework Codename ZeroGravity, copyright 2017-2020 THEMOST LP all rights reserved
-import { ConfigurationBase, SequentialEventEmitter, Args } from "@themost/common";
-import { HttpApplicationBase, ApplicationServiceConstructor } from "@themost/w/core";
-import { Application, PathParams, Request, Response } from "express-serve-static-core";
-import { NextFunction } from "connect";
-import { HttpContext } from "./HttpContext";
+import { ConfigurationBase, SequentialEventEmitter, Args } from '@themost/common';
+import { HttpApplicationBase, ApplicationServiceConstructor } from '@themost/w/core';
+import { Application, Request, Response } from 'express-serve-static-core';
+import { NextFunction } from 'connect';
+import { HttpContext } from './HttpContext';
 
 export class HttpApplication extends SequentialEventEmitter implements HttpApplicationBase {
-    private _configuration: ConfigurationBase;
+    private readonly _configuration: ConfigurationBase;
     private services: Map<string, any> = new Map();
     public container: any;
 
@@ -32,7 +31,7 @@ export class HttpApplication extends SequentialEventEmitter implements HttpAppli
     useStrategy(serviceCtor: ApplicationServiceConstructor<any>, strategyCtor: ApplicationServiceConstructor<any>): this {
         Args.notNull(serviceCtor, 'Service constructor');
         Args.notNull(strategyCtor, 'Strategy constructor');
-        const Strategy = <any>serviceCtor;
+        const Strategy = serviceCtor as any;
         this.services.set(serviceCtor.name, new Strategy(this));
         return this;
     }
@@ -43,7 +42,7 @@ export class HttpApplication extends SequentialEventEmitter implements HttpAppli
      */
     useService(serviceCtor: ApplicationServiceConstructor<any>): this {
         Args.notNull(serviceCtor, 'Service constructor');
-        const Service = <any>serviceCtor;
+        const Service = serviceCtor as any;
         this.services.set(serviceCtor.name, new Service());
         return this;
     }
@@ -98,5 +97,5 @@ export class HttpApplication extends SequentialEventEmitter implements HttpAppli
             return next();
         };
     }
-    
+
 }
