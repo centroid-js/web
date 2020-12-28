@@ -6,3 +6,4 @@ export * from './HttpResult';
 export * from './HttpNextResult';
 export * from './HttpRedirectResult';
 export * from './HttpContentResult';
+export * from './HttpConsumer';

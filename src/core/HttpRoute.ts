@@ -14,7 +14,7 @@ export const HTTP_ROUTE_PATTERNS: Map<string, any> = new Map([
         return '^[+-]?[0-9]*\\.?[0-9]*$';
     }],
     ['guid', () => {
-        return '^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$';
+        return '^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$';
     }],
     ['string', () => {
         return '^\'(.*)\'$';
@@ -24,15 +24,16 @@ export const HTTP_ROUTE_PATTERNS: Map<string, any> = new Map([
     }]
 ]);
 
-declare interface RouterParameter {
+declare interface HttpRouteParameter {
     name: string;
     pattern?: RegExp;
     parser?: any;
     value?: any;
 }
 
-export declare interface HttpRouteMatch {
+export declare interface HttpRouteConfig {
     url: string;
+    index?: number;
     controller?: any;
     action?: string;
 }
@@ -61,13 +62,13 @@ export const HTTP_ROUTE_PARSERS: Map<string, any> = new Map([
 
 export class HttpRoute {
 
-    public routeData: any = {};
+    public params: any = {};
 
-    constructor(public route: HttpRouteMatch) {
+    constructor(public routeConfig: HttpRouteConfig) {
     }
 
     isMatch(urlToMatch: string) {
-        if (this.route == null) {
+        if (this.routeConfig == null) {
             throw new Error('Route may not be null');
         }
         if (typeof urlToMatch !== 'string')
@@ -82,12 +83,12 @@ export class HttpRoute {
             str1 = urlToMatch.substr(0, k);
         }
         const re = /({([\w[\]]+)(?::\s*((?:[^{}\\]+|\\.|{(?:[^{}\\]+|\\.)*})+))?})|((:)([\w[\]]+))/ig;
-        let match = re.exec(this.route.url);
-        const params: RouterParameter[] = [];
+        let match = re.exec(this.routeConfig.url);
+        const routeParams: HttpRouteParameter[] = [];
         while(match) {
             if (typeof match[2] === 'undefined') {
                 // parameter with colon (e.g. :id)
-                params.push({
+                routeParams.push({
                     name: match[6]
                 });
             }
@@ -101,30 +102,30 @@ export class HttpRoute {
                         parser = HTTP_ROUTE_PARSERS.get(match[3]);
                     }
                 }
-                params.push({
+                routeParams.push({
                     name: match[2],
                     pattern: new RegExp(patternMatch, 'ig'),
                     parser
                 });
             }
             else {
-                params.push({
+                routeParams.push({
                     name: match[2]
                 });
             }
-            match = re.exec(this.route.url);
+            match = re.exec(this.routeConfig.url);
         }
         let str;
         let matcher;
-        str = this.route.url.replace(re, '([\\$_\\-.:\',+=%0-9\\w-]+)');
+        str = this.routeConfig.url.replace(re, '([\\$_\\-.:\',+=%0-9\\w-]+)');
         matcher = new RegExp('^' + str + '$', 'ig');
         match = matcher.exec(str1);
         if (typeof match === 'undefined' || match === null) {
             return false;
         }
         let decodedMatch;
-        for (let i = 0; i < params.length; i++) {
-            const param = params[i];
+        for (let i = 0; i < routeParams.length; i++) {
+            const param = routeParams[i];
             if (typeof param.pattern !== 'undefined') {
                 if (!param.pattern.test(match[i+1])) {
                     return false;
@@ -140,8 +141,8 @@ export class HttpRoute {
 
         }
         // set route data
-        params.forEach((x) => {
-            Object.defineProperty(this.routeData, x.name, {
+        routeParams.forEach((x) => {
+            Object.defineProperty(this.params, x.name, {
                 configurable: true,
                 enumerable: true,
                 writable: true,
@@ -149,21 +150,21 @@ export class HttpRoute {
             });
         });
         // set controller
-        if (Object.prototype.hasOwnProperty.call(this.route, 'controller')) {
-            Object.defineProperty(this.routeData, 'controller', {
+        if (Object.prototype.hasOwnProperty.call(this.routeConfig, 'controller')) {
+            Object.defineProperty(this.params, 'controller', {
                 configurable: true,
                 enumerable: true,
                 writable: true,
-                value: this.route.controller
+                value: this.routeConfig.controller
             });
         }
         // set action
-        if (Object.prototype.hasOwnProperty.call(this.route, 'action')) {
-            Object.defineProperty(this.routeData, 'action', {
+        if (Object.prototype.hasOwnProperty.call(this.routeConfig, 'action')) {
+            Object.defineProperty(this.params, 'action', {
                 configurable: true,
                 enumerable: true,
                 writable: true,
-                value: this.route.action
+                value: this.routeConfig.action
             });
         }
         return true;
