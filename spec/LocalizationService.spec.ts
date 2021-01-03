@@ -1,7 +1,5 @@
 // MOST Web Framework Codename ZeroGravity, copyright 2017-2020 THEMOST LP all rights reserved
 import {HttpApplication, I18nLocalizationService} from '@themost/w/platform-server';
-import {LocalizationService} from '@themost/w/core';
-import { ApplicationService } from '@themost/common';
 
 describe('HttpApplication', () => {
 
@@ -23,10 +21,10 @@ describe('HttpApplication', () => {
         });
         const service = new I18nLocalizationService(app);
         service.set('en', {
-            "HelloMessage": 'Hello World'
+            'HelloMessage': 'Hello World'
         });
         service.set('fr', {
-            "HelloMessage": 'Bonjour le monde'
+            'HelloMessage': 'Bonjour le monde'
         });
         expect(service.get('en', 'HelloMessage')).toBe('Hello World');
         expect(service.get('fr', 'HelloMessage')).toBe('Bonjour le monde');

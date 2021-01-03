@@ -1,6 +1,6 @@
 // MOST Web Framework Codename ZeroGravity, copyright 2017-2020 THEMOST LP all rights reserved
 import {HttpApplication} from '@themost/w/platform-server';
-import { ApplicationService, IApplication, ApplicationBase } from '@themost/common';
+import { ApplicationService, ApplicationBase } from '@themost/common';
 
 class SampleService extends ApplicationService {
     constructor(app: ApplicationBase) {
@@ -55,7 +55,7 @@ describe('HttpApplication', () => {
         const app = new HttpApplication();
         app.useStrategy(SampleService, SampleService);
         expect(app.hasService(SampleService)).toBeTruthy();
-        const service = <SampleStrategy>app.getService(SampleService);
+        const service = app.getService(SampleService) as SampleStrategy;
         expect(service.getMessage()).toBeTruthy('Hello World!');
     });
 

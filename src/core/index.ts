@@ -2,3 +2,4 @@
 export * from './HttpApplicationBase';
 export * from './LocalizationService';
 export * from './HttpRoute';
+export * from './RouterService';

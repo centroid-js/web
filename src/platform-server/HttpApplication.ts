@@ -8,6 +8,7 @@ import { HttpContext } from './HttpContext';
 export class HttpApplication extends SequentialEventEmitter implements HttpApplicationBase {
     private readonly _configuration: ConfigurationBase;
     private services: Map<string, any> = new Map();
+    private controllers: Map<string, any> = new Map();
     public container: any;
 
     constructor() {

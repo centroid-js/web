@@ -64,7 +64,7 @@ export class HttpRoute {
 
     public params: any = {};
 
-    constructor(public routeConfig: HttpRouteConfig) {
+    constructor(public routeConfig?: HttpRouteConfig) {
     }
 
     isMatch(urlToMatch: string) {
