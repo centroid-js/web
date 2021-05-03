@@ -1,6 +1,6 @@
 // MOST Web Framework Codename ZeroGravity, copyright 2017-2020 THEMOST LP all rights reserved
 import { ConfigurationBase, SequentialEventEmitter, Args } from '@themost/common';
-import { HttpApplicationBase, ApplicationServiceConstructor } from '@themost/w/core';
+import {HttpApplicationBase, ApplicationServiceConstructor, HttpContextBase} from '@themost/w/core';
 import { Application, Request, Response } from 'express-serve-static-core';
 import { NextFunction } from 'connect';
 import { HttpContext } from './HttpContext';
@@ -98,5 +98,13 @@ export class HttpApplication extends SequentialEventEmitter implements HttpAppli
             return next();
         };
     }
-
 }
+
+declare global {
+    namespace Express {
+        interface Request {
+            context: HttpContextBase;
+        }
+    }
+}
+

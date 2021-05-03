@@ -7,3 +7,5 @@ export * from './HttpNextResult';
 export * from './HttpRedirectResult';
 export * from './HttpContentResult';
 export * from './HttpConsumer';
+export * from './HttpController';
+export * from './HttpDecorators';

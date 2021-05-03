@@ -7,11 +7,14 @@
   "main": "platform-server/index.umd.js",
   "scripts": {
     "test": "jasmine",
+    "install-peers": "npm-install-peers",
     "build": "rimraf dist && rollup -c ./rollup.config.js",
     "lint": "tslint"
   },
   "peerDependencies": {
     "@themost/common": "^2.5.5",
+    "@themost/data": "^2.6.1",
+    "@themost/query": "^2.5.0",
     "@themost/xml": "^2.5.1"
   },
   "engines": {
@@ -50,6 +53,7 @@
     "jasmine-spec-reporter": "^5.0.2",
     "json-schema-to-typescript": "^9.1.1",
     "module-alias": "^2.2.2",
+    "npm-install-peers": "^1.2.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rollup": "^2.32.1",
