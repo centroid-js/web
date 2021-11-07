@@ -358,7 +358,7 @@ function httpRoute(url: string, index?: number) {
             Object.defineProperty(descriptor.value, 'httpRoute', {
                 get () {
                     const route: HttpRouteConfig = {
-                        url,
+                        path: url,
                         controller: target.httpControllerName || target.name,
                         action: descriptor.value.httpAction
                     };

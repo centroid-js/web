@@ -9,7 +9,7 @@ describe('RouterService', () => {
         app.useService(RouterService);
         const service = app.getService(RouterService);
         service.add({
-            url: '/users/:action',
+            path: '/users/:action',
             controller: 'users'
         });
         expect(service).toBeTruthy();
@@ -20,10 +20,10 @@ describe('RouterService', () => {
         app.useService(RouterService);
         const service = app.getService(RouterService);
         service.addRange({
-            url: '/users/:action',
+            path: '/users/:action',
             controller: 'users'
         }, {
-            url: '/products/:action',
+            path: '/products/:action',
             controller: 'products'
         });
         const routeConfig = service.routes.find((item) => {
@@ -37,10 +37,10 @@ describe('RouterService', () => {
         app.useService(RouterService);
         const service = app.getService(RouterService);
         service.addRange({
-            url: '/users/:action',
+            path: '/users/:action',
             controller: 'users'
         }, {
-            url: '/products/:action',
+            path: '/products/:action',
             controller: 'products'
         });
         const route = service.parseUrl('/users/me');

@@ -1,9 +1,11 @@
 // MOST Web Framework Codename ZeroGravity, copyright 2017-2020 THEMOST LP all rights reserved
 import { ConfigurationBase, SequentialEventEmitter, Args } from '@themost/common';
-import {HttpApplicationBase, ApplicationServiceConstructor, HttpContextBase} from '@themost/w/core';
+import {HttpApplicationBase, ApplicationServiceConstructor, HttpContextBase, RouterService} from '@themost/w/core';
 import { Application, Request, Response } from 'express-serve-static-core';
 import { NextFunction } from 'connect';
 import { HttpContext } from './HttpContext';
+import { HttpController } from './HttpController';
+import { HttpControllerAnnotation } from './HttpDecorators';
 
 export class HttpApplication extends SequentialEventEmitter implements HttpApplicationBase {
     private readonly _configuration: ConfigurationBase;
@@ -14,6 +16,8 @@ export class HttpApplication extends SequentialEventEmitter implements HttpAppli
     constructor() {
         super();
         this._configuration = new ConfigurationBase();
+        // use router service
+        this.useService(RouterService);
     }
 
     /**
@@ -98,12 +102,19 @@ export class HttpApplication extends SequentialEventEmitter implements HttpAppli
             return next();
         };
     }
+
+    use(controllerConstructor: new() => HttpController) {
+        const Controller = controllerConstructor as unknown;
+        const annotation = Controller as HttpControllerAnnotation;
+        this.controllers.set(annotation.name, controllerConstructor);
+    }
+
 }
 
 declare global {
     namespace Express {
         interface Request {
-            context: HttpContextBase;
+            context: HttpContext;
         }
     }
 }

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "declaration": false,
+    "declaration": true,
     "target": "esnext",
     "moduleResolution": "node",
     "experimentalDecorators": true,
@@ -16,7 +16,7 @@
     ],
     "paths": {
       "@themost/w/core": [ "src/core/index" ],
-      "@themost/w/platform-server": [ "src/core/platform-server" ]
+      "@themost/w/platform-server": [ "src/platform-server/index" ]
     }
   },
   "include": [

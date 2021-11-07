@@ -32,7 +32,7 @@ declare interface HttpRouteParameter {
 }
 
 export declare interface HttpRouteConfig {
-    url: string;
+    path: string;
     index?: number;
     controller?: any;
     action?: string;
@@ -83,7 +83,7 @@ export class HttpRoute {
             str1 = urlToMatch.substr(0, k);
         }
         const re = /({([\w[\]]+)(?::\s*((?:[^{}\\]+|\\.|{(?:[^{}\\]+|\\.)*})+))?})|((:)([\w[\]]+))/ig;
-        let match = re.exec(this.routeConfig.url);
+        let match = re.exec(this.routeConfig.path);
         const routeParams: HttpRouteParameter[] = [];
         while(match) {
             if (typeof match[2] === 'undefined') {
@@ -113,11 +113,11 @@ export class HttpRoute {
                     name: match[2]
                 });
             }
-            match = re.exec(this.routeConfig.url);
+            match = re.exec(this.routeConfig.path);
         }
         let str;
         let matcher;
-        str = this.routeConfig.url.replace(re, '([\\$_\\-.:\',+=%0-9\\w-]+)');
+        str = this.routeConfig.path.replace(re, '([\\$_\\-.:\',+=%0-9\\w-]+)');
         matcher = new RegExp('^' + str + '$', 'ig');
         match = matcher.exec(str1);
         if (typeof match === 'undefined' || match === null) {

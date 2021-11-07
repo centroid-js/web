@@ -1,7 +1,6 @@
 const rollup = require('rollup');
-const typescript = require('rollup-plugin-typescript2');
+const typescript = require('@rollup/plugin-typescript');
 const pkg = require('./package.json');
-const dts = require('rollup-plugin-dts').default;
 module.exports = [{
     input: './src/core/index.ts',
     output: [
@@ -24,11 +23,9 @@ module.exports = [{
             sourcemap: true
         },
     ],
-    external: Object.keys(pkg.dependencies).concat(Object.keys(pkg.peerDependencies)),
+    external: Object.keys(pkg.dependencies),
     plugins: [
-        typescript({
-
-        })
+        typescript()
     ]
 }, {
     input: './src/platform-server/index.ts',
@@ -53,26 +50,8 @@ module.exports = [{
         },
     ],
     external: Object.keys(pkg.dependencies)
-        .concat(Object.keys(pkg.peerDependencies))
         .concat('@themost/w/core'),
     plugins: [
         typescript()
     ]
-}, {
-    input: './src/core/index.ts',
-    output: [{
-        file: `core/index.d.ts`
-    }],
-    plugins: [dts()],
-    external: Object.keys(pkg.dependencies)
-        .concat(Object.keys(pkg.peerDependencies))
-}, {
-    input: './src/platform-server/index.ts',
-    output: [{
-        file: `platform-server/index.d.ts`
-    }],
-    external: Object.keys(pkg.dependencies)
-        .concat(Object.keys(pkg.peerDependencies))
-        .concat('@themost/w/core'),
-    plugins: [dts()],
 }];

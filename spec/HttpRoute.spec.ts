@@ -5,14 +5,14 @@ describe('HttpRoute', () => {
 
     it('should create instance', () => {
         const route = new HttpRoute({
-            url: '/:controller/:action'
+            path: '/:controller/:action'
         });
         expect(route).toBeTruthy();
     });
 
     it('should match route', () => {
         let route = new HttpRoute({
-            url: '/:controller/:action'
+            path: '/:controller/:action'
         });
         let isMatch = route.isMatch('/users/me');
         expect(isMatch).toBeTruthy();
@@ -20,7 +20,7 @@ describe('HttpRoute', () => {
         expect(route.params.controller).toBe('users');
         expect(route.params.action).toBe('me');
         route = new HttpRoute({
-            url: '/users/:action',
+            path: '/users/:action',
             controller: 'users'
         });
         isMatch = route.isMatch('/users/me');
@@ -32,7 +32,7 @@ describe('HttpRoute', () => {
 
     it('should match /:controller/{id:int}/:action', () => {
         const route = new HttpRoute({
-            url: '/:controller/{id:int}/:action'
+            path: '/:controller/{id:int}/:action'
         });
         let isMatch = route.isMatch('/users/100/groups')
         expect(isMatch).toBeTruthy();
@@ -44,7 +44,7 @@ describe('HttpRoute', () => {
 
     it('should match /users/123e4567-e89b-12d3-a456-426614174000/groups', () => {
         const route = new HttpRoute({
-            url: '/:controller/{id:guid}/:action'
+            path: '/:controller/{id:guid}/:action'
         });
         const isMatch = route.isMatch('/users/123e4567-e89b-12d3-a456-426614174000/groups')
         expect(isMatch).toBeTruthy();
@@ -56,7 +56,7 @@ describe('HttpRoute', () => {
         const route = new HttpRoute({
             controller: 'utils',
             action: 'round',
-            url: '/utils/round\\({value:decimal}\\)'
+            path: '/utils/round\\({value:decimal}\\)'
         });
         let isMatch = route.isMatch('/utils/round(12.45)')
         expect(isMatch).toBeTruthy();
@@ -70,7 +70,7 @@ describe('HttpRoute', () => {
         const route = new HttpRoute({
             controller: 'utils',
             action: 'round',
-            url: '/utils/round\\({x:decimal},{y:decimal}\\)'
+            path: '/utils/round\\({x:decimal},{y:decimal}\\)'
         });
         const isMatch = route.isMatch('/utils/round(12.45,1.2)')
         expect(isMatch).toBeTruthy();
@@ -82,7 +82,7 @@ describe('HttpRoute', () => {
         const route = new HttpRoute({
             controller: 'utils',
             action: 'send',
-            url: '/utils/send\\({message:string}\\)'
+            path: '/utils/send\\({message:string}\\)'
         });
         const isMatch = route.isMatch('/utils/send(\'Hello%20World\')')
         expect(isMatch).toBeTruthy();
@@ -93,7 +93,7 @@ describe('HttpRoute', () => {
         const route = new HttpRoute({
             controller: 'utils',
             action: 'setBirthDate',
-            url: '/utils/calculateAge\\({value:date}\\)'
+            path: '/utils/calculateAge\\({value:date}\\)'
         });
         let isMatch = route.isMatch('/utils/calculateAge(\'2000-04-23\')')
         expect(isMatch).toBeTruthy();

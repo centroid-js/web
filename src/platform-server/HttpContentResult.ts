@@ -42,7 +42,7 @@ export class HttpContentResult extends HttpResult {
             });
         }
         // send response
-        context.response.write(this.content, this.contentEncoding);
+        context.response.write(this.content, this.contentEncoding as BufferEncoding);
     }
 
 }
