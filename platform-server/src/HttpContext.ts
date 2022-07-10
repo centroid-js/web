@@ -1,16 +1,37 @@
 // MOST Web Framework Codename ZeroGravity, copyright 2017-2020 THEMOST LP all rights reserved
-import { HttpContextBase, HttpApplicationBase, LocalizationService } from '@themost/w/core';
+import { ApplicationBase, ConfigurationBase } from '@themost/common';
+import { DefaultDataContext } from '@themost/data';
+import { HttpContextBase, HttpApplicationBase, LocalizationService, enumerable } from '@themost/w/core';
 import { IncomingMessage, ServerResponse } from 'http';
-
-
-export class HttpContext implements HttpContextBase {
+export class HttpContext extends DefaultDataContext implements HttpContextBase {
     request: IncomingMessage;
     response: ServerResponse;
-    public application: HttpApplicationBase;
     private _locale: string;
+    private _application: HttpApplicationBase;
+    
+    constructor(application: HttpApplicationBase) {
+        // call super constructor
+        super();
+        // set application
+        Object.defineProperty(this, '_application', {
+            configurable: true,
+            enumerable: false,
+            writable: false,
+            value: application
+        });
+    }
+
+    @enumerable(false)
+    get application(): HttpApplicationBase {
+        return this._application;
+    }
 
     public getApplication(): HttpApplicationBase {
-        return this.application;
+        return this._application;
+    }
+
+    public getConfiguration(): ConfigurationBase {
+        return this._application.getConfiguration();
     }
 
     public get locale(): string {

@@ -1,5 +1,5 @@
 import { HttpResult } from './HttpResult';
-import { HttpContextBase } from '../core';
+import { HttpContextBase } from '@themost/w/core';
 import { XSerializer } from '@themost/xml';
 
 export class HttpXmlResult extends HttpResult {

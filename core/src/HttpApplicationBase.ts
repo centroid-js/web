@@ -22,12 +22,10 @@ export declare interface HttpApplicationBase extends ApplicationBase {
 
 export declare interface HttpContextBase {
 
-    readonly request: IncomingMessage;
-
-    readonly response: ServerResponse;
-
+    request: IncomingMessage;
+    response: ServerResponse;
     readonly application: HttpApplicationBase;
-
+    locale: string;
     translate(key: string): string;
 
 }
