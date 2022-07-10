@@ -1,4 +1,4 @@
-import { HttpApplicationBase, RouterService, HttpRoute } from '../core';
+import { HttpApplicationBase, RouterService, HttpRoute } from '@themost/w/core';
 import {Router} from 'express';
 import { HttpController } from './HttpController';
 import { HttpResult } from './HttpResult';
