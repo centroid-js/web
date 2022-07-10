@@ -12,10 +12,11 @@ app.getService(RouterService).add({
     action: 'index',
 });
 
-
 container.use('/', app.middleware(container));
 container.use(controllerRouter(app));
 
-export {container};
+export {
+    container
+};
 
 

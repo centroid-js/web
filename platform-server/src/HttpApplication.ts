@@ -78,8 +78,7 @@ export class HttpApplication extends SequentialEventEmitter implements HttpAppli
     }
 
     createContext(req: Request, res: Response) {
-        const context = new HttpContext();
-        context.application = this;
+        const context = new HttpContext(this);
         context.request = req;
         context.response = res;
         return context;
@@ -98,6 +97,15 @@ export class HttpApplication extends SequentialEventEmitter implements HttpAppli
                 configurable: false,
                 writable: false,
                 value: context
+            });
+            req.on('end', () => {
+                //on end
+                if (req.context) {
+                    //finalize data context
+                    return req.context.finalize(() => {
+                    //
+                    });
+                }
             });
             return next();
         };

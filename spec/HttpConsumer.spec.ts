@@ -5,8 +5,7 @@ describe('HttpConsumer', () => {
             expect(this).toBeInstanceOf(HttpContext);
             return Promise.resolve(value);
         });
-        const context = new HttpContext();
-        context.application = new HttpApplication();
+        const context = new HttpContext(new HttpApplication());
         const res = await consumer.run(context, true);
         expect(res).toBeTrue();
     });
