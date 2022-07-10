@@ -104,8 +104,8 @@ dist
 .tern-port
 
 # project
-/core/
-/platform-server/
+/core/dist/
+/platform-server/dist/
 
 # editors
 .theia
