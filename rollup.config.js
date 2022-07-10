@@ -2,49 +2,49 @@ const rollup = require('rollup');
 const typescript = require('@rollup/plugin-typescript');
 const pkg = require('./package.json');
 module.exports = [{
-    input: './src/core/index.ts',
+    input: './core/src/index.ts',
     output: [
         {
             name: '@themost/w/core',
-            file: `core/index.cjs.js`,
+            file: `core/dist/index.cjs.js`,
             format: 'cjs',
             sourcemap: true
         },
         {
             name: '@themost/w/core',
-            file: `core/index.esm.js`,
+            file: `core/dist/index.esm.js`,
             format: 'esm',
             sourcemap: true
         },
         {
             name: '@themost/w/core',
-            file: `core/index.umd.js`,
+            file: `core/dist/index.umd.js`,
             format: 'umd',
             sourcemap: true
         },
     ],
     external: Object.keys(pkg.dependencies),
     plugins: [
-        typescript()
+        typescript({ tsconfig: './core/tsconfig.lib.json' })
     ]
 }, {
-    input: './src/platform-server/index.ts',
+    input: './platform-server/src/index.ts',
     output: [
         {
             name: '@themost/w/platform-server',
-            file: `platform-server/index.cjs.js`,
+            file: `platform-server/dist/index.cjs.js`,
             format: 'cjs',
             sourcemap: true
         },
         {
             name: '@themost/w/platform-server',
-            file: `platform-server/index.esm.js`,
+            file: `platform-server/dist/index.esm.js`,
             format: 'esm',
             sourcemap: true
         },
         {
             name: '@themost/w/platform-server',
-            file: `platform-server/index.umd.js`,
+            file: `platform-server/dist/index.umd.js`,
             format: 'umd',
             sourcemap: true
         },
@@ -52,6 +52,6 @@ module.exports = [{
     external: Object.keys(pkg.dependencies)
         .concat('@themost/w/core'),
     plugins: [
-        typescript()
+        typescript({ tsconfig: './platform-server/tsconfig.lib.json' })
     ]
 }];
