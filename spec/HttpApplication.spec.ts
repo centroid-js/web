@@ -48,15 +48,15 @@ describe('HttpApplication', () => {
         app.useService(SampleService);
         const service = app.getService(SampleService);
         expect(service).toBeTruthy();
-        expect(service.getMessage()).toBeTruthy('Hello World');
+        expect(service.getMessage()).toEqual('Hello World');
     });
 
     it('should use HttpApplication.useStrategy()', () => {
         const app = new HttpApplication();
-        app.useStrategy(SampleService, SampleService);
+        app.useStrategy(SampleService, SampleStrategy);
         expect(app.hasService(SampleService)).toBeTruthy();
         const service = app.getService(SampleService) as SampleStrategy;
-        expect(service.getMessage()).toBeTruthy('Hello World!');
+        expect(service.getMessage()).toEqual('Hello World!');
     });
 
     it('should use HttpApplication.getConfiguration()', () => {
