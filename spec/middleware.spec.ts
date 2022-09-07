@@ -1,7 +1,9 @@
 // MOST Web Framework Codename ZeroGravity, copyright 2017-2020 THEMOST LP all rights reserved
-import {HttpApplication, HttpContext} from '@themost/w/platform-server';
+import {controllerRouter, HttpApplication, HttpContext} from '@themost/w/platform-server';
 import * as request from 'supertest';
 import * as express from 'express';
+import { RouterService } from '@themost/w/core';
+import { HelloController } from './examples/app1/controllers/HelloController';
 
 describe('HttpApplication', () => {
 
@@ -19,6 +21,21 @@ describe('HttpApplication', () => {
         const response = await request(container).get('/hello');
         expect(response.status).toBe(200);
         expect(response.body).toBeTruthy();
+    });
+
+    it('should use router', async () => {
+        const app = new HttpApplication();
+        app.useService(RouterService);
+        app.getService(RouterService).add({
+            path: '/hello/:action',
+            controller: HelloController
+        });
+        const container = express();
+        container.use(app.middleware(container));
+        container.use(controllerRouter(app));
+        const response = await request(container).get('/hello/index');
+        expect(response.status).toBe(200);
+        expect(response.text).toBeTruthy();
     });
 
 });
