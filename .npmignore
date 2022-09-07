@@ -8,3 +8,5 @@ tsconfig.json
 .env
 tsconfig.spec.json
 spec
+jest.config.js
+jest.setup.js
