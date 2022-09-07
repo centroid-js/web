@@ -55,7 +55,8 @@ describe('HttpApplication', () => {
         const app = new HttpApplication();
         app.useStrategy(SampleService, SampleStrategy);
         expect(app.hasService(SampleService)).toBeTruthy();
-        const service = app.getService(SampleService) as SampleStrategy;
+        const service = app.getService(SampleService);
+        expect(service).toBeInstanceOf(SampleStrategy);
         expect(service.getMessage()).toEqual('Hello World!');
     });
 

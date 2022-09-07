@@ -36,7 +36,7 @@ export class HttpApplication extends SequentialEventEmitter implements HttpAppli
     useStrategy(serviceCtor: ApplicationServiceConstructor<any>, strategyCtor: ApplicationServiceConstructor<any>): this {
         Args.notNull(serviceCtor, 'Service constructor');
         Args.notNull(strategyCtor, 'Strategy constructor');
-        const Strategy = serviceCtor as any;
+        const Strategy = strategyCtor as any;
         this.services.set(serviceCtor.name, new Strategy(this));
         return this;
     }
