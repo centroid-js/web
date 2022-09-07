@@ -5,9 +5,7 @@ import { HttpResult } from './HttpResult';
 import { HttpNextResult } from './HttpNextResult';
 import { HttpControllerMethodAnnotation } from './HttpDecorators';
 import {capitalize} from 'lodash';
-import {parseScript} from 'esprima';
 import { LangUtils } from '@themost/common';
-import { isContext } from 'vm';
 
 export function controllerRouter(app: HttpApplicationBase): Router {
     const router = Router();
@@ -18,7 +16,8 @@ export function controllerRouter(app: HttpApplicationBase): Router {
             const ControllerCtor = route.routeConfig.controller as new() => HttpController;
             const controller = new ControllerCtor();
             controller.context = req.context;
-            const controllerMethod: (...arg: any) => any = controller[route.routeConfig.action];
+            const action = route.params.action || route.routeConfig.action;
+            const controllerMethod: (...arg: any) => any = controller[action];
             if (typeof controllerMethod === 'function') {
                 // validate httpAction
                 const annotation = controllerMethod as HttpControllerMethodAnnotation;
