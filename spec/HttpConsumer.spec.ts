@@ -7,6 +7,6 @@ describe('HttpConsumer', () => {
         });
         const context = new HttpContext(new HttpApplication());
         const res = await consumer.run(context, true);
-        expect(res).toBeTrue();
+        expect(res).toBeTruthy();
     });
 });

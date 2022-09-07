@@ -39,7 +39,7 @@ describe('HttpRoute', () => {
         expect(route.params.controller).toBe('users');
         expect(route.params.id).toBe(100);
         isMatch = route.isMatch('/users/abc/groups')
-        expect(isMatch).toBeFalse();
+        expect(isMatch).toBeFalsy();
     });
 
     it('should match /users/123e4567-e89b-12d3-a456-426614174000/groups', () => {
