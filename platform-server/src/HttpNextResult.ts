@@ -7,5 +7,4 @@ export class HttpNextResult extends HttpResult {
         // do nothing
         return;
     }
-
 }

@@ -6,6 +6,7 @@ import { HttpNextResult } from './HttpNextResult';
 import { HttpControllerMethodAnnotation } from './HttpDecorators';
 import {capitalize} from 'lodash';
 import { LangUtils } from '@themost/common';
+import { HttpResultFormatter } from './HttpResultFormatter';
 
 export function controllerRouter(app: HttpApplicationBase): Router {
     const router = Router();
@@ -47,6 +48,10 @@ export function controllerRouter(app: HttpApplicationBase): Router {
                         }).catch((err) => {
                             return next(err);
                         });
+                    } else {
+                        // try to find a suitable result
+                        const formatter = controller.context.application.getService(HttpResultFormatter);
+                        formatter.format(result)
                     }
                 }
             }

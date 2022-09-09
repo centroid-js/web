@@ -13,4 +13,10 @@ export class HelloController extends HttpController {
     index(message: string) {
         return this.content('Hello World');
     }
+    @httpGet()
+    message() {
+        return {
+            message: 'Hello World'
+        }
+    }
 }
