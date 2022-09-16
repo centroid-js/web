@@ -1,9 +1,4 @@
-/*
-We recommend eventually switching this configuration to extend from
-the recommended rulesets in typescript-eslint. 
-https://github.com/typescript-eslint/tslint-to-eslint-config/blob/master/docs/FAQs.md
-*/
-module.exports = {
+{
     "env": {
         "browser": true,
         "es6": true,
@@ -148,7 +143,10 @@ module.exports = {
         ],
         "prefer-arrow/prefer-arrow-functions": "error",
         "prefer-const": "error",
-        "quotes": "error",
+        "quotes": [
+            "error",
+            "single"
+        ],
         "radix": "error",
         "spaced-comment": [
             "error",
@@ -162,4 +160,4 @@ module.exports = {
         "use-isnan": "error",
         "valid-typeof": "off"
     }
-};
+}
