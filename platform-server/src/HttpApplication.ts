@@ -6,6 +6,7 @@ import { NextFunction } from 'connect';
 import { HttpContext } from './HttpContext';
 import { HttpController } from './HttpController';
 import { HttpControllerAnnotation } from './HttpDecorators';
+import { HttpResultFormatter } from './HttpResultFormatter';
 
 export class HttpApplication extends SequentialEventEmitter implements HttpApplicationBase {
     private readonly _configuration: ConfigurationBase;
@@ -18,6 +19,8 @@ export class HttpApplication extends SequentialEventEmitter implements HttpAppli
         this._configuration = new ConfigurationBase();
         // use router service
         this.useService(RouterService);
+        // use http formatter
+        this.useService(HttpResultFormatter);
     }
 
     /**

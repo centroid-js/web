@@ -36,7 +36,7 @@ export function controllerRouter(app: HttpApplicationBase): Router {
                             args.push(undefined);
                         }
                     });
-                    const result = controllerMethod.apply(controller, args);
+                    let result = controllerMethod.apply(controller, args);
                     if (result instanceof HttpNextResult) {
                         return next;
                     }
@@ -51,7 +51,26 @@ export function controllerRouter(app: HttpApplicationBase): Router {
                     } else {
                         // try to find a suitable result
                         const formatter = controller.context.application.getService(HttpResultFormatter);
-                        formatter.format(result)
+                        if (formatter == null) {
+                            return next();
+                        }
+                        const HttpResultCtor: any = formatter.tryFormat(controller.context);
+                        if (typeof HttpResultCtor === 'function') {
+                            const finalResult = new HttpResultCtor(result);
+                            if (finalResult instanceof HttpNextResult) {
+                                return next();
+                            }
+                            if (finalResult instanceof HttpResult) {
+                                return finalResult.execute(controller.context).then(() => {
+                                    if (controller.context.response.writableEnded === false) {
+                                        controller.context.response.end();
+                                    }
+                                }).catch((err) => {
+                                    return next(err);
+                                });
+                            }
+                        }
+                        return next();
                     }
                 }
             }

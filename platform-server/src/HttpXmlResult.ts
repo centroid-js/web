@@ -3,7 +3,7 @@ import { HttpContextBase } from '@themost/w/core';
 import { XSerializer } from '@themost/xml';
 
 export class HttpXmlResult extends HttpResult {
-    execute(context: HttpContextBase): Promise<any> {
+    async execute(context: HttpContextBase): Promise<any> {
         if (this.data == null) {
             context.response.writeHead(this.status || 204);
             return;
@@ -15,7 +15,7 @@ export class HttpXmlResult extends HttpResult {
     }
     constructor(public data: any) {
         super();
-        this.contentType = 'utf8';
-        this.contentEncoding = 'application/xml';
+        this.contentType = 'application/xml';
+        this.contentEncoding = 'utf8';
     }
 };

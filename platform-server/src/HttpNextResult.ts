@@ -3,7 +3,7 @@ import { HttpResult } from './HttpResult';
 import { HttpContextBase } from '@themost/w/core';
 
 export class HttpNextResult extends HttpResult {
-    execute(_context: HttpContextBase): Promise<void> {
+    async execute(_context: HttpContextBase): Promise<void> {
         // do nothing
         return;
     }
