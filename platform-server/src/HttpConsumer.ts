@@ -2,7 +2,7 @@
 import {HttpContextBase} from '@themost/w/core';
 
 export class HttpConsumer {
-    constructor(public callable: (this: HttpContextBase,...args: any[]) => Promise<any>) {
+    constructor(public callable: (context: HttpContextBase,...args: any[]) => Promise<any>) {
         //
     }
 

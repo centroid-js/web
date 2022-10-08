@@ -327,27 +327,33 @@ function httpAuthorize(value?: boolean) {
     };
 }
 
+declare interface HttpActionConsumerAnnotation {
+    actionConsumers?: Array<HttpConsumer>;
+}
+
 /**
- * @param {string} name
- * @param {Function|HttpConsumer} consumer
+
+ * @param {HttpConsumer} consumer
  * @returns {Function}
  */
-function httpActionConsumer(name: string, consumer: any) {
+function httpActionConsumer(consumer: HttpConsumer) {
     return (target: any, key: any, descriptor: any) => {
         if (typeof descriptor.value !== 'function') {
             throw new Error('Decorator is not valid on this declaration type.');
         }
+        const actionConsumerContainer = descriptor.value as HttpActionConsumerAnnotation;
+        actionConsumerContainer.actionConsumers = actionConsumerContainer.actionConsumers || [];
         if (consumer instanceof HttpConsumer) {
             // set consumer
-            descriptor.value[name] = consumer;
+            actionConsumerContainer.actionConsumers.push(consumer);
             // and exit
             return descriptor;
         }
         // validate consumer function
         if (typeof consumer !== 'function') {
-            throw new Error('Consumer may be a function.');
+            throw new Error('Action consumer must be a function.');
         }
-        descriptor.value[name] = new HttpConsumer(consumer);
+        actionConsumerContainer.actionConsumers.push(new HttpConsumer(consumer));
         return descriptor;
     };
 }
@@ -424,5 +430,6 @@ export {
     httpParamAlias,
     httpParam,
     httpAuthorize,
+    HttpActionConsumerAnnotation,
     httpActionConsumer
 }
