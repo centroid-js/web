@@ -4,6 +4,8 @@ import * as request from 'supertest';
 import * as express from 'express';
 import { RouterService } from '@themost/w/core';
 import { HelloController } from './examples/app1/controllers/HelloController';
+import { TraceUtils } from '@themost/common';
+import { Application } from 'express';
 
 describe('HttpApplication', () => {
 
@@ -11,6 +13,11 @@ describe('HttpApplication', () => {
         const app = new HttpApplication();
         expect(app).toBeTruthy();
         const container = express();
+        app.container.subscribe((container: Application) => {
+            if (container) {
+                //
+            }
+        });
         container.use(app.middleware(container));
         container.get('/hello', (req, res) => {
             expect(req.context).toBeInstanceOf(HttpContext);

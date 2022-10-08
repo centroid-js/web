@@ -7,12 +7,14 @@ import { HttpContext } from './HttpContext';
 import { HttpController } from './HttpController';
 import { HttpControllerAnnotation } from './HttpDecorators';
 import { HttpResultFormatter } from './HttpResultFormatter';
+import { BehaviorSubject } from 'rxjs';
 
 export class HttpApplication extends SequentialEventEmitter implements HttpApplicationBase {
     private readonly _configuration: ConfigurationBase;
     private services: Map<string, any> = new Map();
     private controllers: Map<string, any> = new Map();
-    public container: any;
+    public readonly container: BehaviorSubject<Application> = new BehaviorSubject<Application>(null);
+    public containedIn: Application;
 
     constructor() {
         super();
@@ -95,8 +97,11 @@ export class HttpApplication extends SequentialEventEmitter implements HttpAppli
 
     middleware(app: Application) {
         // set container
-        this.container = app;
+        this.containedIn = app;
         // return request handler
+        process.nextTick(() => {
+            this.container.next(app);
+        });
         return (req: Request, res: Response, next: NextFunction) => {
             // create context
             const context = this.createContext(req, res);
