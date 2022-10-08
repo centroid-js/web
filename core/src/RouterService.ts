@@ -10,6 +10,7 @@ export class RouterService extends ApplicationService {
 
     /**
      * Appends a route to routes collection
+     *
      * @param item
      */
     add(item: HttpRouteConfig): this {
@@ -19,14 +20,15 @@ export class RouterService extends ApplicationService {
 
     /**
      * Adds a collection of routes
+     *
      * @param item
      */
     addRange(...item: HttpRouteConfig[]): this {
-        this.routes.push.apply(this.routes, item);
+        this.routes.push(...item);
         return this;
     }
 
-    parseUrl(url: string, startIndex: number = 0): HttpRoute {
+    parseUrl(url: string, startIndex = 0): HttpRoute {
         const route = new HttpRoute();
         // tslint:disable-next-line:prefer-for-of
         for(let i = startIndex; i < this.routes.length; i++) {

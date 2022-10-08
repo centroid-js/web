@@ -33,7 +33,37 @@ describe('HttpApplication', () => {
         const container = express();
         container.use(app.middleware(container));
         container.use(controllerRouter(app));
-        const response = await request(container).get('/hello/index');
+        let response = await request(container).get('/hello/index');
+        expect(response.status).toBe(200);
+        expect(response.text).toBeTruthy();
+    });
+
+    it('should use result formatter', async () => {
+        const app = new HttpApplication();
+        app.useService(RouterService);
+        app.getService(RouterService).add({
+            path: '/hello/:action',
+            controller: HelloController
+        });
+        const container = express();
+        container.use(app.middleware(container));
+        container.use(controllerRouter(app));
+        const response = await request(container).get('/hello/message');
+        expect(response.status).toBe(200);
+        expect(response.text).toBeTruthy();
+    });
+
+    it('should use httpGet() decorator', async () => {
+        const app = new HttpApplication();
+        app.useService(RouterService);
+        app.getService(RouterService).add({
+            path: '/hello/:action',
+            controller: HelloController
+        });
+        const container = express();
+        container.use(app.middleware(container));
+        container.use(controllerRouter(app));
+        const response = await request(container).get('/hello/message');
         expect(response.status).toBe(200);
         expect(response.text).toBeTruthy();
     });

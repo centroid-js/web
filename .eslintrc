@@ -1,9 +1,4 @@
-/*
-We recommend eventually switching this configuration to extend from
-the recommended rulesets in typescript-eslint. 
-https://github.com/typescript-eslint/tslint-to-eslint-config/blob/master/docs/FAQs.md
-*/
-module.exports = {
+{
     "env": {
         "browser": true,
         "es6": true,
@@ -135,7 +130,12 @@ module.exports = {
         "no-throw-literal": "error",
         "no-trailing-spaces": "error",
         "no-undef-init": "error",
-        "no-underscore-dangle": "error",
+        "no-underscore-dangle": [
+            "warn",
+            {
+                "allowAfterThis": true
+            }
+        ],
         "no-unsafe-finally": "error",
         "no-unused-expressions": "off",
         "no-unused-labels": "error",
@@ -148,7 +148,10 @@ module.exports = {
         ],
         "prefer-arrow/prefer-arrow-functions": "error",
         "prefer-const": "error",
-        "quotes": "error",
+        "quotes": [
+            "error",
+            "single"
+        ],
         "radix": "error",
         "spaced-comment": [
             "error",
@@ -162,4 +165,4 @@ module.exports = {
         "use-isnan": "error",
         "valid-typeof": "off"
     }
-};
+}

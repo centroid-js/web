@@ -31,6 +31,7 @@ function httpController(name: string): ClassDecorator {
 }
 
 declare interface HttpControllerMethodAnnotation extends Function {
+    httpAction?: string;
     httpGet?: boolean;
     httpPost?: boolean;
     httpPut?: boolean;
@@ -42,8 +43,12 @@ declare interface HttpControllerMethodAnnotation extends Function {
 
 function httpGet() {
     return (target: any, key: any, descriptor: any) => {
-        if (typeof descriptor.value === 'function') {
-            descriptor.value.httpGet = true;
+        const func = descriptor.value as HttpControllerMethodAnnotation;
+        if (typeof func === 'function') {
+            func.httpGet = true;
+            if (func.httpAction == null) {
+                func.httpAction = func.name;
+            }
         }
         return descriptor;
     }
@@ -134,15 +139,13 @@ function httpHead() {
 /**
  * @returns {Function}
  */
-function httpAction(name: string) {
-    if (typeof name !== 'string') {
-        throw new TypeError('Action name must be a string');
-    }
+function httpAction(name?: string): any {
     return (target: any, key: any, descriptor: any) => {
-        if (typeof descriptor.value !== 'function') {
+        const func = descriptor.value as HttpControllerMethodAnnotation;
+        if (typeof func !== 'function') {
             throw new Error('Decorator is not valid on this declaration type.');
         }
-        descriptor.value.httpAction = name;
+        func.httpAction = name || func.name;
         return descriptor;
     }
 }

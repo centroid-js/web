@@ -6,6 +6,7 @@ import { HttpNextResult } from './HttpNextResult';
 import { HttpControllerMethodAnnotation } from './HttpDecorators';
 import {capitalize} from 'lodash';
 import { LangUtils } from '@themost/common';
+import { HttpResultFormatter } from './HttpResultFormatter';
 
 export function controllerRouter(app: HttpApplicationBase): Router {
     const router = Router();
@@ -13,10 +14,11 @@ export function controllerRouter(app: HttpApplicationBase): Router {
         const appRouter: RouterService = req.context.application.getService(RouterService);
         const route: HttpRoute = appRouter.parseUrl(req.url);
         if (route) {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             const ControllerCtor = route.routeConfig.controller as new() => HttpController;
             const controller = new ControllerCtor();
             controller.context = req.context;
-            const action = route.params.action || route.routeConfig.action;
+            const action: string = route.params.action || route.routeConfig.action;
             const controllerMethod: (...arg: any) => any = controller[action];
             if (typeof controllerMethod === 'function') {
                 // validate httpAction
@@ -47,6 +49,29 @@ export function controllerRouter(app: HttpApplicationBase): Router {
                         }).catch((err) => {
                             return next(err);
                         });
+                    } else {
+                        // try to find a suitable result
+                        const formatter = controller.context.application.getService(HttpResultFormatter);
+                        if (formatter == null) {
+                            return next();
+                        }
+                        const HttpResultCtor: any = formatter.tryFormat(controller.context);
+                        if (typeof HttpResultCtor === 'function') {
+                            const finalResult = new HttpResultCtor(result);
+                            if (finalResult instanceof HttpNextResult) {
+                                return next();
+                            }
+                            if (finalResult instanceof HttpResult) {
+                                return finalResult.execute(controller.context).then(() => {
+                                    if (controller.context.response.writableEnded === false) {
+                                        controller.context.response.end();
+                                    }
+                                }).catch((err) => {
+                                    return next(err);
+                                });
+                            }
+                        }
+                        return next();
                     }
                 }
             }
