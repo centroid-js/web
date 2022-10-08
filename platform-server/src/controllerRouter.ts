@@ -14,10 +14,11 @@ export function controllerRouter(app: HttpApplicationBase): Router {
         const appRouter: RouterService = req.context.application.getService(RouterService);
         const route: HttpRoute = appRouter.parseUrl(req.url);
         if (route) {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             const ControllerCtor = route.routeConfig.controller as new() => HttpController;
             const controller = new ControllerCtor();
             controller.context = req.context;
-            const action = route.params.action || route.routeConfig.action;
+            const action: string = route.params.action || route.routeConfig.action;
             const controllerMethod: (...arg: any) => any = controller[action];
             if (typeof controllerMethod === 'function') {
                 // validate httpAction
@@ -36,7 +37,7 @@ export function controllerRouter(app: HttpApplicationBase): Router {
                             args.push(undefined);
                         }
                     });
-                    let result = controllerMethod.apply(controller, args);
+                    const result = controllerMethod.apply(controller, args);
                     if (result instanceof HttpNextResult) {
                         return next;
                     }

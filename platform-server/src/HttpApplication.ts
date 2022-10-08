@@ -1,6 +1,6 @@
 // MOST Web Framework Codename ZeroGravity, copyright 2017-2020 THEMOST LP all rights reserved
 import { ConfigurationBase, SequentialEventEmitter, Args } from '@themost/common';
-import {HttpApplicationBase, ApplicationServiceConstructor, HttpContextBase, RouterService} from '@themost/w/core';
+import {HttpApplicationBase, ApplicationServiceConstructor, RouterService} from '@themost/w/core';
 import { Application, Request, Response } from 'express-serve-static-core';
 import { NextFunction } from 'connect';
 import { HttpContext } from './HttpContext';
@@ -33,12 +33,14 @@ export class HttpApplication extends SequentialEventEmitter implements HttpAppli
     /**
      * Registers an application service of the given type by defining an alternate type as constructor of the given service.
      * Use this operation to extend or override application service functionality.
+     *
      * @param serviceCtor
      * @param strategyCtor
      */
     useStrategy(serviceCtor: ApplicationServiceConstructor<any>, strategyCtor: ApplicationServiceConstructor<any>): this {
         Args.notNull(serviceCtor, 'Service constructor');
         Args.notNull(strategyCtor, 'Strategy constructor');
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         const Strategy = strategyCtor as any;
         this.services.set(serviceCtor.name, new Strategy(this));
         return this;
@@ -46,10 +48,12 @@ export class HttpApplication extends SequentialEventEmitter implements HttpAppli
 
     /**
      * Registers an application service
+     *
      * @param serviceCtor An application service to register
      */
     useService(serviceCtor: ApplicationServiceConstructor<any>): this {
         Args.notNull(serviceCtor, 'Service constructor');
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         const Service = serviceCtor as any;
         this.services.set(serviceCtor.name, new Service());
         return this;
@@ -57,6 +61,7 @@ export class HttpApplication extends SequentialEventEmitter implements HttpAppli
 
     /**
      * Returns true if the current application has a service of the given type
+     *
      * @param serviceCtor An application service to search for
      */
     hasService(serviceCtor: ApplicationServiceConstructor<any>): boolean {
@@ -66,6 +71,7 @@ export class HttpApplication extends SequentialEventEmitter implements HttpAppli
 
     /**
      * Gets an application service of the given type
+     *
      * @param serviceCtor The type of service to get
      */
     getService<T>(serviceCtor: ApplicationServiceConstructor<T>): T {
@@ -102,9 +108,9 @@ export class HttpApplication extends SequentialEventEmitter implements HttpAppli
                 value: context
             });
             req.on('end', () => {
-                //on end
+                // on end
                 if (req.context) {
-                    //finalize data context
+                    // finalize data context
                     return req.context.finalize(() => {
                     //
                     });
@@ -115,6 +121,7 @@ export class HttpApplication extends SequentialEventEmitter implements HttpAppli
     }
 
     use(controllerConstructor: new() => HttpController) {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         const Controller = controllerConstructor as unknown;
         const annotation = Controller as HttpControllerAnnotation;
         this.controllers.set(annotation.name, controllerConstructor);
@@ -123,7 +130,9 @@ export class HttpApplication extends SequentialEventEmitter implements HttpAppli
 }
 
 declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Express {
+        // eslint-disable-next-line no-shadow
         interface Request {
             context: HttpContext;
         }
