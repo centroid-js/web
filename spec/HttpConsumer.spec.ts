@@ -1,4 +1,4 @@
-import {HttpApplication, HttpConsumer, HttpContext} from '@themost/w/platform-server';
+import {HttpApplication, HttpConsumer, HttpContext} from '@centroid.js/w/platform-server';
 describe('HttpConsumer', () => {
     it('should create instance', async () => {
         const consumer = new HttpConsumer(function(value: any) {

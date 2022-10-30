@@ -1,4 +1,4 @@
-import { HttpController, httpController, httpGet, httpAction, httpParam } from '@themost/w/platform-server';
+import { HttpController, httpController, httpGet, httpAction, httpParam } from '@centroid.js/w/platform-server';
 
 @httpController('hello')
 export class HelloController extends HttpController {

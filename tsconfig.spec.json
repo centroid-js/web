@@ -17,8 +17,8 @@
       "dom"
     ],
     "paths": {
-      "@themost/w/core": [ "core/src/index" ],
-      "@themost/w/platform-server": [ "platform-server/src/index" ]
+      "@centroid.js/w/core": [ "core/src/index" ],
+      "@centroid.js/w/platform-server": [ "platform-server/src/index" ]
     }
   },
   "exclude": [

@@ -1,5 +1,5 @@
 // MOST Web Framework Codename ZeroGravity, copyright 2017-2020 THEMOST LP all rights reserved
-import {HttpApplication} from '@themost/w/platform-server';
+import {HttpApplication} from '@centroid.js/w/platform-server';
 import { ApplicationService, ApplicationBase } from '@themost/common';
 
 class SampleService extends ApplicationService {

@@ -5,19 +5,19 @@ module.exports = [{
     input: './core/src/index.ts',
     output: [
         {
-            name: '@themost/w/core',
+            name: '@centroid.js/w/core',
             file: `core/dist/index.cjs.js`,
             format: 'cjs',
             sourcemap: true
         },
         {
-            name: '@themost/w/core',
+            name: '@centroid.js/w/core',
             file: `core/dist/index.esm.js`,
             format: 'esm',
             sourcemap: true
         },
         {
-            name: '@themost/w/core',
+            name: '@centroid.js/w/core',
             file: `core/dist/index.umd.js`,
             format: 'umd',
             sourcemap: true
@@ -31,26 +31,26 @@ module.exports = [{
     input: './platform-server/src/index.ts',
     output: [
         {
-            name: '@themost/w/platform-server',
+            name: '@centroid.js/w/platform-server',
             file: `platform-server/dist/index.cjs.js`,
             format: 'cjs',
             sourcemap: true
         },
         {
-            name: '@themost/w/platform-server',
+            name: '@centroid.js/w/platform-server',
             file: `platform-server/dist/index.esm.js`,
             format: 'esm',
             sourcemap: true
         },
         {
-            name: '@themost/w/platform-server',
+            name: '@centroid.js/w/platform-server',
             file: `platform-server/dist/index.umd.js`,
             format: 'umd',
             sourcemap: true
         },
     ],
     external: Object.keys(pkg.dependencies)
-        .concat('@themost/w/core'),
+        .concat('@centroid.js/w/core'),
     plugins: [
         typescript({ tsconfig: './platform-server/tsconfig.lib.json' })
     ]

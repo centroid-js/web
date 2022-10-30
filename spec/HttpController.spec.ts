@@ -1,5 +1,5 @@
 import {TestController} from './TestController';
-import {HttpControllerAnnotation, HttpControllerMethodAnnotation, HttpApplication} from '@themost/w/platform-server';
+import {HttpControllerAnnotation, HttpControllerMethodAnnotation, HttpApplication} from '@centroid.js/w/platform-server';
 
 describe('HttpController', () => {
     it('should has controller decorator', () => {

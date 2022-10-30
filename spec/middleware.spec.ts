@@ -1,8 +1,8 @@
 // MOST Web Framework Codename ZeroGravity, copyright 2017-2020 THEMOST LP all rights reserved
-import {controllerRouter, HttpApplication, HttpContext} from '@themost/w/platform-server';
+import {controllerRouter, HttpApplication, HttpContext} from '@centroid.js/w/platform-server';
 import * as request from 'supertest';
 import * as express from 'express';
-import { RouterService } from '@themost/w/core';
+import { RouterService } from '@centroid.js/w/core';
 import { HelloController } from './examples/app1/controllers/HelloController';
 
 describe('HttpApplication', () => {

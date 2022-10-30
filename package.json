@@ -1,7 +1,7 @@
 {
-  "name": "@themost/w",
+  "name": "@centroid.js/w",
   "version": "3.0.0",
-  "description": "MOST Web Framework MVC Module",
+  "description": "centroid.js MVC Module",
   "types": "platform-server/index.d.ts",
   "module": "platform-server/index.esm.js",
   "main": "platform-server/index.umd.js",
@@ -16,14 +16,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/themost-framework/w.git"
+    "url": "git+https://github.com/centroid-js/w.git"
   },
   "author": "Kyriakos Barbounakis <k.barbounakis@gmail.com>",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/themost-framework/w/issues"
+    "url": "https://github.com/centroid-js/w/issues"
   },
-  "homepage": "https://github.com/themost-framework/w#readme",
+  "homepage": "https://github.com/centroid-js/w#readme",
   "dependencies": {
     "@themost/common": "^2.5.12",
     "@themost/data": "^2.6.42",
@@ -49,6 +49,8 @@
     "@typescript-eslint/parser": "^5.30.5",
     "dotenv": "^8.2.0",
     "eslint": "^8.19.0",
+    "eslint-plugin-jsdoc": "^39.4.0",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
     "express": "^4.17.1",
     "jest": "^28.1.3",
     "json-schema-to-typescript": "^9.1.1",
@@ -61,7 +63,7 @@
     "typescript": "^4.4.4"
   },
   "_moduleAliases": {
-    "@themost/w/core": "core/src/index",
-    "@themost/w/platform-server": "platform-server/src/index"
+    "@centroid.js/w/core": "core/src/index",
+    "@centroid.js/w/platform-server": "platform-server/src/index"
   }
 }
