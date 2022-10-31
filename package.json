@@ -1,6 +1,6 @@
 {
   "name": "@centroid.js/w",
-  "version": "3.0.0",
+  "version": "3.0.1-next.0",
   "description": "centroid.js MVC Module",
   "types": "platform-server/index.d.ts",
   "module": "platform-server/index.esm.js",
