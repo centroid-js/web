@@ -148,7 +148,12 @@ module.exports = {
         ],
         "prefer-arrow/prefer-arrow-functions": "error",
         "prefer-const": "error",
-        "quotes": "error",
+        "quotes": [
+            "error",
+            {
+                "single": true
+            }
+        ],
         "radix": "error",
         "spaced-comment": [
             "error",
