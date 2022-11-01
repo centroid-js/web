@@ -1,4 +1,4 @@
-import { HttpApplicationBase, RouterService, HttpRoute } from '@centroid.js/w/core';
+import { HttpApplicationBase, RouterService, HttpRoute } from '@centroid.js/web/core';
 import {Router} from 'express';
 import { HttpController } from './HttpController';
 import { HttpResult } from './HttpResult';

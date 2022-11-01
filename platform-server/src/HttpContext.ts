@@ -1,7 +1,7 @@
 // MOST Web Framework Codename ZeroGravity, copyright 2017-2020 THEMOST LP all rights reserved
 import { ApplicationBase, ConfigurationBase } from '@themost/common';
 import { DefaultDataContext } from '@themost/data';
-import { HttpContextBase, HttpApplicationBase, LocalizationService, enumerable } from '@centroid.js/w/core';
+import { HttpContextBase, HttpApplicationBase, LocalizationService, enumerable } from '@centroid.js/web/core';
 import { IncomingMessage, ServerResponse } from 'http';
 export class HttpContext extends DefaultDataContext implements HttpContextBase {
     request: IncomingMessage;

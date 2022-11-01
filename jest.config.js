@@ -91,8 +91,8 @@ module.exports = {
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
-    '^@centroid.js/w/core$': '<rootDir>/core/src/index',
-    '^@centroid.js/w/platform-server$': '<rootDir>/platform-server/src/index',
+    '^@centroid.js/web/core$': '<rootDir>/core/src/index',
+    '^@centroid.js/web/platform-server$': '<rootDir>/platform-server/src/index',
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader

@@ -3,7 +3,7 @@ import {TraceUtils, LangUtils, HttpBadRequestError, HttpUnauthorizedError, Args}
 import {HttpConsumer} from './HttpConsumer';
 import {DataTypeValidator, MinLengthValidator, MaxLengthValidator,
 MinValueValidator, MaxValueValidator, RequiredValidator, PatternValidator} from '@themost/data';
-import {HttpRouteConfig} from '@centroid.js/w/core';
+import {HttpRouteConfig} from '@centroid.js/web/core';
 
 class DecoratorError extends Error {
     constructor(msg?: string) {

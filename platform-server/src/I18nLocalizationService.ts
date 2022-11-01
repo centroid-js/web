@@ -1,5 +1,5 @@
 // MOST Web Framework Codename ZeroGravity, copyright 2017-2020 THEMOST LP all rights reserved
-import { LocalizationService } from '@centroid.js/w/core';
+import { LocalizationService } from '@centroid.js/web/core';
 import { ApplicationBase } from '@themost/common';
 import {I18n, ConfigurationOptions} from 'i18n';
 import * as path from 'path';

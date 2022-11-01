@@ -14,7 +14,7 @@
         "module": "ESNext",
         "target": "es5",
         "paths": {
-            "@centroid.js/w/core": [
+            "@centroid.js/web/core": [
                 "../core/src/index"
             ]
         }

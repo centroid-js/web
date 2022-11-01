@@ -10,3 +10,11 @@ tsconfig.spec.json
 spec
 jest.config.js
 jest.setup.js
+coverage
+
+# dev
+.gitpod.yml
+
+# eslint
+.eslintignore
+.eslintrc.js
