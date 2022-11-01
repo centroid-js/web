@@ -16,14 +16,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/centroid-js/w.git"
+    "url": "git+https://github.com/centroid-js/web.git"
   },
   "author": "Kyriakos Barbounakis <k.barbounakis@gmail.com>",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/centroid-js/w/issues"
+    "url": "https://github.com/centroid-js/web/issues"
   },
-  "homepage": "https://github.com/centroid-js/w#readme",
+  "homepage": "https://github.com/centroid-js/web#readme",
   "dependencies": {
     "@themost/common": "^2.5.12",
     "@themost/data": "^2.6.42",
