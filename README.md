@@ -1,4 +1,4 @@
-# @centroid.js/w
+# @centroid.js/web
 centroid.js MVC module
 
 
