@@ -5,10 +5,15 @@ export class HelloController extends HttpController {
     constructor() {
         super();
     }
-    @httpGet()
-    @httpAction('index')
-    @httpParam({
-        name: 'message'
+    
+    @httpGet({
+        name: 'index',
+        params: [
+            {
+                name: 'message',
+                maxLength: 512
+            }
+        ]
     })
     index(message: string) {
         return this.content('Hello World');
