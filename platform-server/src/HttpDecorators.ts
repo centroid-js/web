@@ -30,7 +30,7 @@ function httpController(name: string): ClassDecorator {
     }
 }
 
-declare interface HttpControllerMethodAnnotation extends Function {
+declare interface HttpControllerMethodDeclaration {
     httpGet?: boolean;
     httpPost?: boolean;
     httpPut?: boolean;
@@ -40,18 +40,51 @@ declare interface HttpControllerMethodAnnotation extends Function {
     httpOptions?: boolean;
 }
 
-function httpGet() {
+declare interface HttpControllerMethodAnnotation extends HttpControllerMethodDeclaration, Function {
+
+}
+
+declare interface HttpParamAttributeOptions {
+    name: string;
+    type?: string;
+    pattern?: RegExp|string;
+    minValue?: any;
+    maxValue?: any;
+    minLength?: number;
+    maxLength?: number;
+    required?: boolean;
+    message?: string;
+}
+
+function httpMethod(method: HttpControllerMethodDeclaration,
+    extras?: { name?: string, params?: HttpParamAttributeOptions[] }) {
     return (target: any, key: any, descriptor: any) => {
         if (typeof descriptor.value === 'function') {
-            descriptor.value.httpGet = true;
+            Object.assign(descriptor.value, method);
+            if (extras) {
+                httpAction(extras.name)(target, key, descriptor);
+                if (Array.isArray(extras.params)) {
+                    for (const param of extras.params) {
+                        httpParam(param)
+                    }
+                }
+            }
         }
         return descriptor;
     }
 }
+
+function httpGet(extras?: { name?: string, params?: HttpParamAttributeOptions[] }) {
+    return httpMethod({
+        httpGet: true,
+        httpOptions: true,
+        httpHead: true
+    }, extras);
+}
 /**
  * @returns {Function}
  */
-function httpAny() {
+function httpAny(extras?: { name?: string, params?: HttpParamAttributeOptions[] }) {
     return (target: any, key: any, descriptor: any) => {
         if (typeof descriptor.value === 'function') {
             descriptor.value.httpGet = true;
@@ -65,75 +98,51 @@ function httpAny() {
         return descriptor;
     }
 }
-/**
- * @returns {Function}
- */
-function httpPost() {
-    return (target: any, key: any, descriptor: any) => {
-        if (typeof descriptor.value === 'function') {
-            descriptor.value.httpPost = true;
-        }
-        return descriptor;
-    }
+
+function httpPost(extras?: { name?: string, params?: HttpParamAttributeOptions[] }) {
+    return httpMethod({
+        httpPost: true,
+        httpOptions: true,
+        httpHead: true
+    }, extras);
 }
-/**
- * @returns {Function}
- */
-function httpPatch() {
-    return (target: any, key: any, descriptor: any) => {
-        if (typeof descriptor.value === 'function') {
-            descriptor.value.httpPatch = true;
-        }
-        return descriptor;
-    }
+
+function httpPatch(extras?: { name?: string, params?: HttpParamAttributeOptions[] }) {
+    return httpMethod({
+        httpPatch: true,
+        httpOptions: true,
+        httpHead: true
+    }, extras);
 }
-/**
- * @returns {Function}
- */
-function httpPut() {
-    return (target: any, key: any, descriptor: any) => {
-        if (typeof descriptor.value === 'function') {
-            descriptor.value.httpPut = true;
-        }
-        return descriptor;
-    }
+
+function httpPut(extras?: { name?: string, params?: HttpParamAttributeOptions[] }) {
+    return httpMethod({
+        httpPut: true,
+        httpOptions: true,
+        httpHead: true
+    }, extras);
 }
-/**
- * @returns {Function}
- */
-function httpDelete() {
-    return (target: any, key: any, descriptor: any) => {
-        if (typeof descriptor.value === 'function') {
-            descriptor.value.httpDelete = true;
-        }
-        return descriptor;
-    }
+
+function httpDelete(extras?: { name?: string, params?: HttpParamAttributeOptions[] }) {
+    return httpMethod({
+        httpDelete: true,
+        httpOptions: true,
+        httpHead: true
+    }, extras);
 }
-/**
- * @returns {Function}
- */
-function httpOptions() {
-    return (target: any, key: any, descriptor: any) => {
-        if (typeof descriptor.value === 'function') {
-            descriptor.value.httpOptions = true;
-        }
-        return descriptor;
-    }
+
+function httpOptions(extras?: { name?: string, params?: HttpParamAttributeOptions[] }) {
+    return httpMethod({
+        httpOptions: true
+    }, extras);
 }
-/**
- * @returns {Function}
- */
-function httpHead() {
-    return (target: any, key: any, descriptor: any) => {
-        if (typeof descriptor.value === 'function') {
-            descriptor.value.httpHead = true;
-        }
-        return descriptor;
-    }
+
+function httpHead(extras?: { name?: string, params?: HttpParamAttributeOptions[] }) {
+    return httpMethod({
+        httpHead: true
+    }, extras);
 }
-/**
- * @returns {Function}
- */
+
 function httpAction(name: string) {
     if (typeof name !== 'string') {
         throw new TypeError('Action name must be a string');
@@ -167,18 +176,6 @@ function httpParamAlias(name: string, alias: string) {
         descriptor.value.httpParamAlias[name] = alias;
         return descriptor;
     }
-}
-
-declare interface HttpParamAttributeOptions {
-    name: string;
-    type?: string;
-    pattern?: RegExp|string;
-    minValue?: any;
-    maxValue?: any;
-    minLength?: number;
-    maxLength?: number;
-    required?: boolean;
-    message?: string;
 }
 
 /**
